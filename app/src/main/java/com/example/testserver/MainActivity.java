@@ -2,11 +2,11 @@ package com.example.testserver;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -18,24 +18,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        checkPermission();
         //ActivityのonClickListenerを割り当てる
         findViewById(R.id.button_get).setOnClickListener(this);
         findViewById(R.id.button_post).setOnClickListener(this);
 
+        String permissions[] = new String[]{Manifest.permission.INTERNET,Manifest.permission.READ_EXTERNAL_STORAGE};
+        checkPermission(permissions,REQUEST_CODE);
+
     }
 
-    public void checkPermission(){
-        // パーミッションの許可確認
-        // 許可されていない
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-            // パーミッションの許可をリクエスト
-            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.INTERNET}, REQUEST_CODE);
-        }
-        // パーミッションが許可されている
-        else {
-            Toast.makeText(this, "権限が許可されています", Toast.LENGTH_SHORT).show();
-            // 以下通常処理等に飛ばす・・・
+    public void checkPermission(final String permissions[],final int request_code){
+        // 同時に複数渡すが、許可されていないものだけダイアログが表示される
+        ActivityCompat.requestPermissions(this, permissions, request_code);
+    }
+
+    // requestPermissionsのコールバック
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+
+            case REQUEST_CODE:
+                for(int i = 0; i < permissions.length; i++ ){
+                    if (grantResults[i] == PackageManager.PERMISSION_GRANTED) {
+                        Toast.makeText(this, "パーミッション追加しました", Toast.LENGTH_SHORT).show();
+                        Log.w( "DEBUG_DATA", "パーミッション追加しました " + permissions[i] + " " + grantResults[i]);
+                    } else {
+                        Toast.makeText(this, "パーミッション追加できませんでした", Toast.LENGTH_SHORT).show();
+                        Log.w( "DEBUG_DATA", "パーミッション追加できませんでした。 " + permissions[i] + " " + grantResults[i]);
+                    }
+                }
+                break;
+            default:
+                break;
         }
     }
 
