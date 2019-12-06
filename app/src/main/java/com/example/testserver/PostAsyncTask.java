@@ -73,8 +73,8 @@ public class PostAsyncTask extends AsyncTask<Object, Void, Object> {
         //⑩簡単にJSONレスポンスをパースしてみる
         String title = "no response";
         String title2 = "";
-        String description = "";
-        String publicTime = "";
+        //String description = "";
+        //String publicTime = "";
         try {
             //キー値をもとにJSON検索
             JSONObject json = new JSONObject((String) result);

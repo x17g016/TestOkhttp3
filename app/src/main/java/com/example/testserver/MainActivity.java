@@ -68,13 +68,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 getParams[1] = queryString;
 
                 //GetAsyncTaskを実行
+                Log.d("debug","非同期処理開始");
                 new GetAsyncTask(this).execute(getParams);
                 break;
 
             //idがpostだったら
             case R.id.button_post:
                 //POSTリクエストして、自前のファイル受信サイトへアクセス
-                String url2 = "https://kinako.cf/json.json";
+                String url2 = "https://kinako.cf/encount/json.json";
                 String testStr = "test";   //配列が送れるかのテスト用
                 //PostAsyncTaskに渡すパラメータをObject配列に設定
                 Object[] postParams = new Object[2];

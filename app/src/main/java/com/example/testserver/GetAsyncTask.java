@@ -35,10 +35,10 @@ public class GetAsyncTask extends AsyncTask<Object, Void, Object> {
     //バックグラウンド処理
     @Override
     protected Object doInBackground(Object[] data) {
-
         //Object配列でパラメータを持ってこれたか確認
         String url = (String) data[0];
         String queryString = (String) data[1];
+        //Log.d("debug",url);
 
         //HTTP処理用オプジェクト作成
         OkHttpClient client = new OkHttpClient();
@@ -79,9 +79,6 @@ public class GetAsyncTask extends AsyncTask<Object, Void, Object> {
             JSONObject json = new JSONObject((String) result);
             title = json.getString("name");
             title2 = json.getString("age");
-            /*JSONObject descriptionObj = (JSONObject) json.get("description");
-            description = descriptionObj.getString("text");
-            publicTime = descriptionObj.getString("publicTime");*/
         } catch (JSONException je) {
             je.getStackTrace();
         }
