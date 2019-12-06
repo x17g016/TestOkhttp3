@@ -38,7 +38,7 @@ public class GetAsyncTask extends AsyncTask<Object, Void, Object> {
         //Object配列でパラメータを持ってこれたか確認
         String url = (String) data[0];
         String queryString = (String) data[1];
-        //Log.d("debug",url);
+        Log.d("debug",url);
 
         //HTTP処理用オプジェクト作成
         OkHttpClient client = new OkHttpClient();
